@@ -4,7 +4,7 @@ A JavaFX application for managing Minecraft modpacks and tracking changes to mod
 
 ## Project Overview
 
-This project implements a modpack management system based on the UML class diagram provided. It consists of three main classes that follow an inheritance hierarchy, allowing for comprehensive modpack and mod management with a user-friendly JavaFX interface.
+This project implements a modpack management system. It consists of three main classes that follow an inheritance hierarchy, allowing for comprehensive modpack and mod management with a user-friendly JavaFX interface.
 
 ## Class Architecture
 
@@ -73,44 +73,6 @@ This project implements a modpack management system based on the UML class diagr
 - `selectModpack()` - Handles modpack selection
 - `showChangesDialog()` - Displays log of all changes
 
-## Project Structure
-
-```
-src/
-├── main/java/com/example/
-│   ├── App.java                 # Main JavaFX application entry point
-│   ├── ModpackUpdate.java       # Base class for change tracking
-│   ├── ModpackManager.java      # Core data management
-│   └── ModpackGUI.java          # JavaFX user interface
-└── test/java/com/example/
-    ├── ModpackUpdateTest.java   # Tests for ModpackUpdate
-    ├── ModpackManagerTest.java  # Tests for ModpackManager
-    ├── ModpackGUITest.java      # Tests for ModpackGUI
-    └── TestRunner.java          # Main test runner
-```
-
-## Features Implemented
-
-### Core Functionality
-- ✅ Create and manage multiple modpacks
-- ✅ Add and remove mods from modpacks
-- ✅ Track changes (added/removed mods)
-- ✅ Data persistence (save/load to file)
-- ✅ Input validation and error handling
-
-### User Interface
-- ✅ Main screen for modpack selection
-- ✅ Modpack management screen
-- ✅ Add/Remove mod dialogs
-- ✅ Changes tracking dialog
-- ✅ Status feedback and confirmations
-
-### Data Management
-- ✅ Text file-based persistence
-- ✅ Modpack-to-mods mapping
-- ✅ Change history tracking
-- ✅ Data integrity validation
-
 ## Testing
 
 The project includes comprehensive test suites for all classes:
@@ -127,11 +89,6 @@ The project includes comprehensive test suites for all classes:
 - Tests data persistence (save/load)
 - Verifies summary generation
 
-### ModpackGUITest
-- Tests inherited data management functionality
-- Validates GUI can perform all operations
-- Tests integration between GUI and data layers
-
 ### Running Tests
 ```bash
 # Run all tests
@@ -142,12 +99,6 @@ java -cp src/test/java:src/main/java com.example.ModpackUpdateTest
 java -cp src/test/java:src/main/java com.example.ModpackManagerTest
 java -cp src/test/java:src/main/java com.example.ModpackGUITest
 ```
-
-## Running the Application
-
-### Prerequisites
-- Java 11 or higher
-- JavaFX SDK
 
 ### Compilation and Execution
 ```bash
@@ -185,15 +136,6 @@ The application saves data to `modpack_data.txt` in a simple text format:
 - Mod version tracking
 - Export/Import functionality
 - Mod dependency management
-- UI themes and customization
-
-## Technical Notes
-
-- The application uses inheritance to share functionality between layers
-- JavaFX components require the Application Thread for proper testing
-- File I/O operations include error handling and validation
-- The GUI layer maintains separation of concerns with the data layer
-- All classes follow the UML design specifications provided
 
 ## Class Relationships
 
@@ -208,7 +150,3 @@ ModpackGUI (User Interface)
 This inheritance structure allows:
 - ModpackGUI to access all ModpackManager functionality
 - ModpackManager to access all ModpackUpdate functionality
-- Clean separation of concerns while maintaining code reuse
-- Easy testing of individual components
-
-The implementation successfully fulfills all requirements from the original UML specification while providing a functional, tested, and maintainable codebase.
