@@ -1,0 +1,5 @@
+MODPACKS:
+Land of Dreams
+MODPACK_MODS:
+Land of Dreams:
+  Farmer's Delight

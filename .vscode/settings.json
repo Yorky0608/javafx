@@ -1,0 +1,12 @@
+{
+    "java.configuration.updateBuildConfiguration": "interactive",
+    "java.project.sourcePaths": [
+        "src/main/java",
+        "src/test/java"
+    ],
+    "java.project.outputPath": "target/classes",
+    "java.project.referencedLibraries": [
+        "lib/javafx-sdk-23.0.1/lib/*.jar"
+    ],
+    "java.compile.nullAnalysis.mode": "disabled"
+}
