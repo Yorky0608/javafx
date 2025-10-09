@@ -1,10 +1,18 @@
 # Minecraft Modpack Manager
 
-A JavaFX application for managing Minecraft modpacks and tracking changes to mod collections.
+A JavaFX-based application for managing Minecraft modpacks and their mods with automatic data persistence.
+
+## Features
+
+✅ **Three-Class Inheritance Architecture**: ModpackGUI → ModpackManager → ModpackUpdate  
+✅ **Auto-Save Functionality**: Changes are automatically saved without manual intervention  
+✅ **Persistent Data Storage**: Text-based format with proper indentation handling  
+✅ **Comprehensive GUI**: Complete JavaFX interface for all operations  
+✅ **Robust Testing**: Full test suite covering all functionality  
 
 ## Project Overview
 
-This project implements a modpack management system. It consists of three main classes that follow an inheritance hierarchy, allowing for comprehensive modpack and mod management with a user-friendly JavaFX interface.
+This project implements a production-ready modpack management system with clean architecture, comprehensive testing, and reliable data persistence.
 
 ## Class Architecture
 

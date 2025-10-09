@@ -34,7 +34,6 @@ public class App extends Application {
             // Save any pending changes before closing
             try {
                 modpackGUI.saveToJson();
-                System.out.println("Modpack data saved successfully.");
             } catch (Exception e) {
                 System.err.println("Error saving modpack data: " + e.getMessage());
             }

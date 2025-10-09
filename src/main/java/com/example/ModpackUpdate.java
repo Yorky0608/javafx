@@ -28,7 +28,6 @@ public class ModpackUpdate {
     public void checkModpackMods(String modpack) {
         // Implementation would compare current state with previous state
         // For now, this is a placeholder for future implementation
-        System.out.println("Checking modpack: " + modpack + " for changes...");
     }
 
     /**

@@ -8,5 +8,6 @@
     "java.project.referencedLibraries": [
         "lib/javafx-sdk-23.0.1/lib/*.jar"
     ],
-    "java.compile.nullAnalysis.mode": "disabled"
+    "java.compile.nullAnalysis.mode": "disabled",
+    "java.debug.settings.onBuildFailureProceed": true
 }

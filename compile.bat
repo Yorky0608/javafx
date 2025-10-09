@@ -5,9 +5,6 @@ echo Compiling Modpack Manager project...
 echo Compiling App class...
 javac -d target\classes --module-path "lib\javafx-sdk-23.0.1\lib" --add-modules javafx.controls,javafx.fxml -cp "lib\javafx-sdk-23.0.1\lib\*" src\main\java\com\example\App.java
 
-echo Compiling Controllers...
-javac -d target\classes --module-path "lib\javafx-sdk-23.0.1\lib" --add-modules javafx.controls,javafx.fxml -cp "lib\javafx-sdk-23.0.1\lib\*;target\classes" src\main\java\com\example\*Controller.java
-
 echo Compiling Modpack classes...
 javac -d target\classes --module-path "lib\javafx-sdk-23.0.1\lib" --add-modules javafx.controls,javafx.fxml -cp "lib\javafx-sdk-23.0.1\lib\*;target\classes" src\main\java\com\example\Modpack*.java
 
@@ -17,9 +14,7 @@ javac -d target\classes --module-path "lib\javafx-sdk-23.0.1\lib" --add-modules 
 echo Copying FXML resources...
 xcopy "src\main\resources\com\example\*.fxml" "target\classes\com\example\" /Y
 
-echo Compiling tests...
-javac -d target\test-classes --source-path src\test\java src\test\java\com\example\ModpackUpdateSimple.java src\test\java\com\example\ModpackTestSuite.java
-javac -d target\test-classes --module-path "lib\javafx-sdk-23.0.1\lib" --add-modules javafx.controls,javafx.fxml -cp "lib\javafx-sdk-23.0.1\lib\*;target\classes" src\test\java\com\example\ModpackGUITestApp.java
+REM Tests are compiled separately using run-tests.bat
 
 echo.
 echo Compilation complete!

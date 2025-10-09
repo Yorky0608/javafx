@@ -1,11 +1,34 @@
 package com.example;
 
-import java.io.*;
-import java.util.*;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * Core data management for modpacks and their mods
- * Extends ModpackUpdate to inherit change tracking functionality
+ *     public void saveToJson() {
+        try (PrintWriter writer = new PrintWriter(new FileWriter(DATA_FILE))) {
+            // Save modpacks
+            writer.println("MODPACKS:");
+            for (String modpack : modpacks) {
+                writer.println(modpack);
+            }
+            
+            // Save modpack-mod mappings
+            writer.println("MODPACK_MODS:");
+            for (Map.Entry<String, List<String>> entry : modpackMods.entrySet()) {
+                writer.println(entry.getKey() + ":");
+                for (String mod : entry.getValue()) {
+                    writer.println("  " + mod);
+                }
+            }pdate to inherit change tracking functionality
  */
 public class ModpackManager extends ModpackUpdate {
     // List of all modpack names
@@ -133,8 +156,6 @@ public class ModpackManager extends ModpackUpdate {
                     writer.println("  " + mod);
                 }
             }
-            
-            System.out.println("Data saved successfully to " + DATA_FILE);
         } catch (IOException e) {
             System.err.println("Error saving data: " + e.getMessage());
         }
@@ -146,9 +167,12 @@ public class ModpackManager extends ModpackUpdate {
     public void loadFromJson() {
         File file = new File(DATA_FILE);
         if (!file.exists()) {
-            System.out.println("No existing data file found. Starting with empty data.");
-            return;
+            return; // No existing data file found, start with empty data
         }
+
+        // Clear existing data before loading
+        modpacks.clear();
+        modpackMods.clear();
 
         try (BufferedReader reader = new BufferedReader(new FileReader(DATA_FILE))) {
             String line;
@@ -156,26 +180,26 @@ public class ModpackManager extends ModpackUpdate {
             String currentModpack = "";
             
             while ((line = reader.readLine()) != null) {
-                line = line.trim();
+                String trimmedLine = line.trim();
                 
-                if (line.equals("MODPACKS:")) {
+                if (trimmedLine.equals("MODPACKS:")) {
                     currentSection = "MODPACKS";
-                } else if (line.equals("MODPACK_MODS:")) {
+                } else if (trimmedLine.equals("MODPACK_MODS:")) {
                     currentSection = "MODPACK_MODS";
-                } else if (currentSection.equals("MODPACKS") && !line.isEmpty()) {
-                    modpacks.add(line);
+                } else if (currentSection.equals("MODPACKS") && !trimmedLine.isEmpty()) {
+                    modpacks.add(trimmedLine);
                 } else if (currentSection.equals("MODPACK_MODS")) {
-                    if (line.endsWith(":")) {
-                        currentModpack = line.substring(0, line.length() - 1);
+                    if (trimmedLine.endsWith(":")) {
+                        currentModpack = trimmedLine.substring(0, trimmedLine.length() - 1);
                         modpackMods.put(currentModpack, new ArrayList<>());
                     } else if (line.startsWith("  ") && !currentModpack.isEmpty()) {
-                        String mod = line.substring(2);
+                        String mod = line.substring(2).trim();
                         modpackMods.get(currentModpack).add(mod);
                     }
                 }
             }
             
-            System.out.println("Data loaded successfully from " + DATA_FILE);
+            // Data loaded successfully
         } catch (IOException e) {
             System.err.println("Error loading data: " + e.getMessage());
         }

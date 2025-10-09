@@ -1,14 +1,21 @@
 package com.example;
 
+import java.util.List;
+import java.util.Optional;
+
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
-import javafx.scene.control.*;
-import javafx.scene.layout.*;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
+import javafx.scene.control.Label;
+import javafx.scene.control.ListView;
+import javafx.scene.control.TextInputDialog;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-import java.util.List;
-import java.util.Optional;
 
 /**
  * User interface layer using JavaFX
@@ -33,6 +40,17 @@ public class ModpackGUI extends ModpackManager {
         this.currentModpack = "";
         this.modListView = new ListView<>();
         this.statusLabel = new Label("Ready");
+        
+        // Load saved data once at startup
+        loadFromJson();
+    }
+    
+    /**
+     * Auto-saves data whenever changes are made
+     */
+    private void autoSave() {
+        saveToJson();
+        statusLabel.setText("Auto-saved at " + java.time.LocalTime.now().toString().substring(0, 8));
     }
 
     /**
@@ -69,15 +87,17 @@ public class ModpackGUI extends ModpackManager {
         modpackListView.setItems(modpackItems);
         modpackListView.setPrefHeight(200);
         
+        // Refresh the list to show loaded data
+        refreshModpackList(modpackItems);
+        
         // Buttons
         HBox buttonBox = new HBox(10);
         Button selectButton = new Button("Select Modpack");
         Button createButton = new Button("Create New Modpack");
         Button deleteButton = new Button("Delete Modpack");
-        Button loadButton = new Button("Load Data");
-        Button saveButton = new Button("Save Data");
+        Button saveButton = new Button("Manual Save");
         
-        buttonBox.getChildren().addAll(selectButton, createButton, deleteButton, loadButton, saveButton);
+        buttonBox.getChildren().addAll(selectButton, createButton, deleteButton, saveButton);
         
         // Event handlers
         selectButton.setOnAction(e -> {
@@ -91,14 +111,9 @@ public class ModpackGUI extends ModpackManager {
         
         createButton.setOnAction(e -> createNewModpack(modpackItems));
         deleteButton.setOnAction(e -> deleteSelectedModpack(modpackListView, modpackItems));
-        loadButton.setOnAction(e -> {
-            loadFromJson();
-            refreshModpackList(modpackItems);
-            statusLabel.setText("Data loaded successfully");
-        });
         saveButton.setOnAction(e -> {
             saveToJson();
-            statusLabel.setText("Data saved successfully");
+            statusLabel.setText("Data manually saved");
         });
         
         mainLayout.getChildren().addAll(titleLabel, selectLabel, modpackListView, buttonBox, statusLabel);
@@ -177,6 +192,7 @@ public class ModpackGUI extends ModpackManager {
             if (!modName.trim().isEmpty()) {
                 addModToModpack(currentModpack, modName);
                 modItems.add(modName);
+                autoSave(); // Auto-save after adding mod
                 statusLabel.setText("Added mod: " + modName);
             }
         });
@@ -201,6 +217,7 @@ public class ModpackGUI extends ModpackManager {
             if (result.isPresent() && result.get() == ButtonType.OK) {
                 removeModFromModpack(currentModpack, selectedMod);
                 modItems.remove(selectedMod);
+                autoSave(); // Auto-save after removing mod
                 statusLabel.setText("Removed mod: " + selectedMod);
             }
         } else {
@@ -266,6 +283,7 @@ public class ModpackGUI extends ModpackManager {
             if (!name.trim().isEmpty()) {
                 addModpack(name);
                 modpackItems.add(name);
+                autoSave(); // Auto-save after creating modpack
                 statusLabel.setText("Created modpack: " + name);
             }
         });
@@ -283,6 +301,7 @@ public class ModpackGUI extends ModpackManager {
             if (result.isPresent() && result.get() == ButtonType.OK) {
                 removeModpack(selected);
                 items.remove(selected);
+                autoSave(); // Auto-save after deleting modpack
                 statusLabel.setText("Deleted modpack: " + selected);
             }
         } else {

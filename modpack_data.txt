@@ -1,5 +1,6 @@
 MODPACKS:
-Land of Dreams
+TestPack
 MODPACK_MODS:
-Land of Dreams:
-  Farmer's Delight
+TestPack:
+  BetterFPS
+  Tinkers Construct
