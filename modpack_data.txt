@@ -1,6 +1,8 @@
 MODPACKS:
 TestPack
+Yorky
 MODPACK_MODS:
+Yorky:
 TestPack:
   BetterFPS
   Tinkers Construct

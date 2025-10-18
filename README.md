@@ -6,6 +6,82 @@ This project implements a modpack management system. It consists of three main c
 
 ## Class Architecture
 
+### UML Class Diagram
+
+```
+┌─────────────────────────────────────────────────────────────┐
+│                     ModpackUpdate                           │
+├─────────────────────────────────────────────────────────────┤
+│ - addedMods: List<String>                                   │
+│ - removedMods: List<String>                                 │
+├─────────────────────────────────────────────────────────────┤
+│ + ModpackUpdate()                                           │
+│ + checkModpackMods(modpack: String): void                  │
+│ + getAddedMods(): List<String>                              │
+│ + getRemovedMods(): List<String>                            │
+│ + addMod(mod: String): void                                 │
+│ + removeMod(mod: String): void                              │
+│ + clearChanges(): void                                      │
+│ + hasChanges(): boolean                                     │
+└─────────────────────────────────────────────────────────────┘
+                              ▲
+                              │ extends
+                              │
+┌─────────────────────────────────────────────────────────────┐
+│                    ModpackManager                           │
+├─────────────────────────────────────────────────────────────┤
+│ - modpacks: List<String>                                    │
+│ - modpackMods: Map<String, List<String>>                    │
+│ - DATA_FILE: String                                         │
+├─────────────────────────────────────────────────────────────┤
+│ + ModpackManager()                                          │
+│ + getModpacks(): List<String>                               │
+│ + getModpackMods(modpack: String): List<String>             │
+│ + setModpacks(modpacks: List<String>): void                 │
+│ + setModpackMods(modpack: String, mods: List<String>): void │
+│ + addModpack(name: String): void                            │
+│ + removeModpack(name: String): void                         │
+│ + addModToModpack(modpack: String, mod: String): void       │
+│ + removeModFromModpack(modpack: String, mod: String): void  │
+│ + saveToJson(): void                                        │
+│ + loadFromJson(): void                                      │
+│ + getSummary(): String                                      │
+└─────────────────────────────────────────────────────────────┘
+                              ▲
+                              │ extends
+                              │
+┌─────────────────────────────────────────────────────────────┐
+│                      ModpackGUI                             │
+├─────────────────────────────────────────────────────────────┤
+│ - primaryStage: Stage                                       │
+│ - currentModpack: String                                    │
+│ - modListView: ListView<String>                             │
+│ - mainLayout: VBox                                          │
+│ - statusLabel: Label                                        │
+├─────────────────────────────────────────────────────────────┤
+│ + ModpackGUI()                                              │
+│ + createGUI(stage: Stage): void                             │
+│ + showMainScreen(): void                                    │
+│ + showModpackScreen(modpack: String): void                  │
+│ + autoSave(): void                                          │
+│ + selectModpack(): void                                     │
+│ + addModButton(): void                                      │
+│ + removeModButton(): void                                   │
+│ + showChangesDialog(): void                                 │
+└─────────────────────────────────────────────────────────────┘
+                              │
+                              │ uses
+                              ▼
+┌─────────────────────────────────────────────────────────────┐
+│                         App                                 │
+├─────────────────────────────────────────────────────────────┤
+│ - modpackGUI: ModpackGUI                                    │
+├─────────────────────────────────────────────────────────────┤
+│ + start(primaryStage: Stage): void                          │
+│ + main(args: String[]): void                                │
+└─────────────────────────────────────────────────────────────┘
+```
+
 ### 1. ModpackUpdate (Base Class)
 **Purpose**: Base class for tracking modpack changes
 
